@@ -432,7 +432,7 @@
 
     <!-- Seats Grid -->
     <div class="seats-grid" id="seatsGrid">
-        <div style="grid-column: 1/-1; text-align: center; color: #a1a1aa; padding: 20px;">Loading Live Seat Data from Google Sheets... ⏳</div>
+        <div style="grid-column: 1/-1; text-align: center; color: #a1a1aa; padding: 20px;">Loading Live Seats from Google Sheet... ⏳</div>
     </div>
 
     <!-- Booking and Admission Modal -->
@@ -473,23 +473,77 @@
     </footer>
 
     <script>
-        // Integrated Google Apps Script Web App URL
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzktQjJI8cw22sd-Mnvh6YP18ZwosXlycB5cZV2qJyVxxsTocRexNtWw7ftKBEolRGt4w/exec";
+        // Google Sheet CSV Export Link
+        const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1qMvkd--s2seaOPykiDo-7y9HW49BhVaUV--uNQKtndc/export?format=csv";
 
         let selectedSeat = null;
+        let seatMapData = {};
 
         async function fetchSeatData() {
             try {
-                const response = await fetch(WEB_APP_URL);
-                const data = await response.json();
-                generateSeats(data);
+                const response = await fetch(SHEET_CSV_URL);
+                const csvText = await response.text();
+                parseCSV(csvText);
             } catch (error) {
-                console.error("Error fetching seat data:", error);
-                document.getElementById('seatsGrid').innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #f43f5e; padding: 20px;">❌ Failed to load live data from Google Sheet. Please check connection.</div>`;
+                console.error("Error fetching sheet:", error);
+                document.getElementById('seatsGrid').innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #f43f5e; padding: 20px;">❌ Failed to load data. Make sure Google Sheet is shared as 'Anyone with the link can view'.</div>`;
             }
         }
 
-        function generateSeats(seatMap) {
+        function parseCSV(text) {
+            const lines = text.split("\n");
+            seatMapData = {};
+            
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+                
+                const row = [];
+                let insideQuotes = false;
+                let currentVal = "";
+                for (let char of line) {
+                    if (char === '"') {
+                        insideQuotes = !insideQuotes;
+                    } else if (char === ',' && !insideQuotes) {
+                        row.push(currentVal.trim());
+                        currentVal = "";
+                    } else {
+                        currentVal += char;
+                    }
+                }
+                row.push(currentVal.trim());
+
+                const seatNo = parseInt(row[0]);
+                const status = row[1] || "Blank";
+                const name = row[2] || "";
+
+                if (seatNo >= 1 && seatNo <= 100) {
+                    let type = "Blank";
+                    let textVal = "Book Now";
+                    let statusStr = status.toLowerCase();
+
+                    if (statusStr.includes("booked")) {
+                        type = "Booked";
+                        textVal = "Booked";
+                    } else if (statusStr.includes("day") || statusStr.includes("left") || statusStr.includes("expiring") || statusStr.includes("renewal")) {
+                        type = "Expiring";
+                        textVal = status;
+                    } else {
+                        type = "Blank";
+                        textVal = "Book Now";
+                    }
+
+                    seatMapData[seatNo] = {
+                        status: type,
+                        text: textVal,
+                        name: name.replace(/^"(.*)"$/, '$1')
+                    };
+                }
+            }
+            generateSeats();
+        }
+
+        function generateSeats() {
             const grid = document.getElementById('seatsGrid');
             grid.innerHTML = '';
             
@@ -498,7 +552,7 @@
             let bookedCount = 0;
 
             for (let i = 1; i <= 100; i++) {
-                const seatInfo = seatMap[i] || { status: "Blank", text: "Book Now", name: "" };
+                const seatInfo = seatMapData[i] || { status: "Blank", text: "Book Now", name: "" };
                 const seatDiv = document.createElement('div');
                 
                 let nameHtml = seatInfo.name ? `<div class="seat-name">${seatInfo.name}</div>` : '';
@@ -537,7 +591,7 @@
             document.getElementById('bookingModal').style.display = 'flex';
         }
 
-        async function handleBookingPayment() {
+        function handleBookingPayment() {
             const name = document.getElementById('studentName').value.trim();
             const phone = document.getElementById('studentPhone').value.trim();
             const address = document.getElementById('studentAddress').value.trim();
@@ -548,19 +602,7 @@
                 return;
             }
 
-            // 1. Send data to Google Sheet automatically
-            try {
-                fetch(WEB_APP_URL, {
-                    method: "POST",
-                    mode: "no-cors",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ seatNo: selectedSeat, name, phone, address, exam })
-                });
-            } catch(e) {
-                console.log("Sheet update trigger error:", e);
-            }
-
-            // 2. Open PhonePe Payment Intent
+            // Open PhonePe Payment Intent
             const upiId = "9413618248-2@ybl";
             const payeeName = "Hi-Tech Library Nohar";
             const amount = "800.00";
@@ -569,7 +611,7 @@
             
             window.open(phonepeUrl, '_blank');
 
-            // 3. Show WhatsApp Confirmation Button
+            // Show WhatsApp Confirmation Button so owner gets student info directly
             const message = `✨ *Hello Sir/Madam!* 🙏\n\nI have paid the fee of *₹800* via PhonePe for Seat Number *#${selectedSeat}* at Hi-Tech Library Nohar. 💳✅\n\n📋 *My Details:*\n👤 Name: ${name}\n📱 Mobile: ${phone}\n📍 Address: ${address}\n🎯 Exam: ${exam}\n\n🚀 I will be coming to the library starting tomorrow. Please confirm my seat. Thank you! 😊📚`;
             
             const whatsappUrl = `https://wa.me/919413618248?text=${encodeURIComponent(message)}`;
@@ -581,7 +623,7 @@
 
         function closeModal() {
             document.getElementById('bookingModal').style.display = 'none';
-            fetchSeatData(); // Refresh seat data on modal close
+            fetchSeatData(); // Refresh data
         }
 
         window.onload = fetchSeatData;
