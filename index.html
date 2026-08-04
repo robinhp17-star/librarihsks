@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📚 हाईटेक लाइब्रेरी - सीट बुकिंग और प्रबंधन</title>
+    <title>📚 Hi-Tech Library Nohar - Seat Booking & Management</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -42,6 +42,12 @@
         header p {
             font-size: 1.1rem;
             color: var(--text-muted);
+        }
+        .owner-tag {
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin-top: 5px;
+            font-weight: 600;
         }
 
         /* Library Photo Gallery Banner */
@@ -194,7 +200,7 @@
             border: 1px solid #3f3f46;
         }
         .seat {
-            padding: 12px 8px;
+            padding: 10px 6px;
             border-radius: 8px;
             text-align: center;
             cursor: pointer;
@@ -224,13 +230,21 @@
             opacity: 0.9;
         }
         .seat-number {
-            font-size: 1rem;
-            margin-bottom: 3px;
+            font-size: 0.95rem;
+            margin-bottom: 2px;
         }
         .seat-status {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             line-height: 1.1;
+        }
+        .seat-name {
+            font-size: 0.6rem;
+            margin-top: 2px;
+            opacity: 0.9;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         /* Modal */
@@ -343,222 +357,223 @@
 <body>
 
     <header>
-        <h1>🏛️ हाईटेक लाइब्रेरी</h1>
-        <p>📖 पढ़ाई के लिए शांत और आधुनिक वातावरण - मात्र ₹800 प्रति माह 🌟</p>
+        <h1>🏛️ Hi-Tech Library Nohar</h1>
+        <p>📖 Peaceful & Modern Study Environment - Only ₹800 Per Month 🌟</p>
+        <div class="owner-tag">👑 Owner: Robin Singh</div>
     </header>
 
     <!-- Library Photos Gallery -->
     <div class="gallery-container">
         <div class="gallery-card">
             <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=600&q=80" alt="Library Study Area">
-            <p>📚 शांत और आरामदायक स्टडी हॉल</p>
+            <p>📚 Quiet & Comfortable Study Hall</p>
         </div>
         <div class="gallery-card">
             <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=600&q=80" alt="Library Bookshelf">
-            <p>💻 हाई-स्पीड इंटरनेट और वाई-फाई</p>
+            <p>💻 High-Speed Internet & Wi-Fi</p>
         </div>
     </div>
 
     <!-- Floating WhatsApp Help Button -->
-    <a href="https://wa.me/919413618248?text=नमस्ते%20🙏,%20मुझे%20हाईटेक%20लाइब्रेरी%20के%20बारे%20में%20कुछ%20जानकारी%20चाहिए%20❓" class="float-whatsapp" target="_blank">
-        <i class="fa-brands fa-whatsapp"></i> सहायता के लिए चैट करें 💬
+    <a href="https://wa.me/919413618248?text=Hello%20🙏,%20I%20need%20some%20information%20about%20Hi-Tech%20Library%20Nohar%20❓" class="float-whatsapp" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i> help247 💬
     </a>
 
-    <!-- लाइब्रेरी के फीचर्स -->
+    <!-- Library Features -->
     <div class="features-container">
         <div class="feature-card">
             <i class="fa-solid fa-wifi"></i>
-            <h4>⚡ 1 Gbps वाई-फाई</h4>
-            <p>बिना रुकावट ऑनलाइन स्टडी 🚀</p>
+            <h4>⚡ 1 Gbps Wi-Fi</h4>
+            <p>Uninterrupted Online Study 🚀</p>
         </div>
         <div class="feature-card">
             <i class="fa-solid fa-droplet"></i>
-            <h4>💧 शुद्ध आरओ वाटर</h4>
-            <p>ठंडा और स्वच्छ पेयजल 🚰</p>
+            <h4>💧 Pure RO Water</h4>
+            <p>Chilled & Clean Drinking Water 🚰</p>
         </div>
         <div class="feature-card">
             <i class="fa-solid fa-snowflake"></i>
-            <h4>❄️ फुल्ली एयर कंडीशन (AC)</h4>
-            <p>आरामदायक वातावरण 🌬️</p>
+            <h4>❄️ Fully Air Conditioned (AC)</h4>
+            <p>Comfortable Atmosphere 🌬️</p>
         </div>
         <div class="feature-card">
             <i class="fa-solid fa-charging-station"></i>
-            <h4>🔌 चार्जिंग सॉकेट</h4>
-            <p>हर सीट पर पावर प्वाइंट 🔋</p>
+            <h4>🔌 Charging Sockets</h4>
+            <p>Power Point on Every Seat 🔋</p>
         </div>
     </div>
 
-    <!-- स्टैट्स काउंटर -->
+    <!-- Stats Counter -->
     <div class="stats-container">
         <div class="stat-box total">
             <h3 id="total-seats">100</h3>
-            <p>🏢 कुल सीट्स</p>
+            <p>🏢 Total Seats</p>
         </div>
         <div class="stat-box available">
             <h3 id="free-seats">--</h3>
-            <p>✅ खाली (Blank)</p>
+            <p>✅ Blank (Available)</p>
         </div>
         <div class="stat-box expiring">
             <h3 id="expiring-seats">--</h3>
-            <p>⚠️ रिन्यूअल बाकी</p>
+            <p>⚠️ Renewal Due</p>
         </div>
         <div class="stat-box booked">
             <h3 id="booked-seats">--</h3>
-            <p>❌ बुकड</p>
+            <p>❌ Booked</p>
         </div>
     </div>
 
-    <!-- लीजेंड -->
+    <!-- Legend -->
     <div class="legend">
         <div class="legend-item"><div class="color-box free"></div> 🟩 Blank (Book Now)</div>
         <div class="legend-item"><div class="color-box warning"></div> 🟨 Renewal Due (Yellow)</div>
         <div class="legend-item"><div class="color-box reserved"></div> 🟥 Booked (Red)</div>
     </div>
 
-    <!-- सीट्स ग्रिड -->
+    <!-- Seats Grid -->
     <div class="seats-grid" id="seatsGrid">
-        <!-- सीट्स यहाँ लोड होंगी -->
+        <!-- Seats will load here -->
     </div>
 
-    <!-- बुकिंग और एडमिशन मॉडल -->
+    <!-- Booking and Admission Modal -->
     <div class="modal" id="bookingModal">
         <div class="modal-content">
-            <h2 id="modalTitle">✨ सीट बुकिंग और एडमिशन 📝</h2>
-            <p id="modalText">अपनी डिटेल्स भरें और PhonePe से ₹800 भुगतान करें। 👇</p>
+            <h2 id="modalTitle">✨ Seat Booking & Admission 📝</h2>
+            <p id="modalText">Fill in your details and pay ₹800 via PhonePe. 👇</p>
             
             <div class="form-group">
-                <label>👤 पूरा नाम (Full Name)</label>
-                <input type="text" id="studentName" placeholder="अपना नाम लिखें">
+                <label>👤 Full Name</label>
+                <input type="text" id="studentName" placeholder="Enter your full name">
             </div>
             <div class="form-group">
-                <label>📱 मोबाइल नंबर (Mobile Number)</label>
-                <input type="tel" id="studentPhone" placeholder="10 अंकों का मोबाइल नंबर">
+                <label>📱 Mobile Number</label>
+                <input type="tel" id="studentPhone" placeholder="10-digit mobile number">
             </div>
             <div class="form-group">
-                <label>📍 पता (Address / City)</label>
-                <input type="text" id="studentAddress" placeholder="गाँव या शहर का नाम">
+                <label>📍 Address / City</label>
+                <input type="text" id="studentAddress" placeholder="Your village or city name">
             </div>
             <div class="form-group">
-                <label>🎯 किस एग्जाम की तैयारी कर रहे हैं?</label>
-                <input type="text" id="studentExam" placeholder="जैसे: RPSC, RAS, NEET, SSC">
+                <label>🎯 Which exam are you preparing for?</label>
+                <input type="text" id="studentExam" placeholder="e.g., RPSC, RAS, NEET, SSC">
             </div>
 
-            <a href="#" id="phonepeLink" class="pay-btn" onclick="enableWhatsAppBtn()">1. 💳 PhonePe से ₹800 भुगतान करें</a>
+            <a href="#" id="phonepeLink" class="pay-btn" onclick="enableWhatsAppBtn()">1. 💳 Pay ₹800 via PhonePe</a>
             
             <a href="#" id="whatsappBtn" class="whatsapp-confirm-btn" target="_blank">
-                <i class="fa-brands fa-whatsapp"></i> 2. 🚀 WhatsApp पर कन्फर्मेशन भेजें
+                <i class="fa-brands fa-whatsapp"></i> 2. 🚀 Send Confirmation on WhatsApp
             </a>
 
-            <button class="close-btn" onclick="closeModal()">❌ रद्द करें</button>
+            <button class="close-btn" onclick="closeModal()">❌ Cancel</button>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 हाईटेक लाइब्रेरी | सभी अधिकार सुरक्षित 🌟</p>
+        <p>&copy; 2026 Hi-Tech Library Nohar | Owner: Robin Singh | All Rights Reserved 🌟</p>
     </footer>
 
     <script>
         const seatMapData = {
-            1: { status: 'Blank', text: 'Book Now' },
-            2: { status: 'Blank', text: 'Book Now' },
-            3: { status: 'Booked', text: 'Booked' },
-            4: { status: 'Blank', text: 'Book Now' },
-            5: { status: 'Blank', text: 'Book Now' },
-            6: { status: 'Expiring', text: '4 Days Left' },
-            7: { status: 'Blank', text: 'Book Now' },
-            8: { status: 'Blank', text: 'Book Now' },
-            9: { status: 'Blank', text: 'Book Now' },
-            10: { status: 'Blank', text: 'Book Now' },
-            11: { status: 'Blank', text: 'Book Now' },
-            12: { status: 'Booked', text: 'Booked' },
-            13: { status: 'Blank', text: 'Book Now' },
-            14: { status: 'Blank', text: 'Book Now' },
-            15: { status: 'Expiring', text: '3 Days Left' },
-            16: { status: 'Blank', text: 'Book Now' },
-            17: { status: 'Blank', text: 'Book Now' },
-            18: { status: 'Blank', text: 'Book Now' },
-            19: { status: 'Blank', text: 'Book Now' },
-            20: { status: 'Blank', text: 'Book Now' },
-            21: { status: 'Blank', text: 'Book Now' },
-            22: { status: 'Blank', text: 'Book Now' },
-            23: { status: 'Blank', text: 'Book Now' },
-            24: { status: 'Blank', text: 'Book Now' },
-            25: { status: 'Booked', text: 'Booked' },
-            26: { status: 'Blank', text: 'Book Now' },
-            27: { status: 'Blank', text: 'Book Now' },
-            28: { status: 'Blank', text: 'Book Now' },
-            29: { status: 'Blank', text: 'Book Now' },
-            30: { status: 'Blank', text: 'Book Now' },
-            31: { status: 'Blank', text: 'Book Now' },
-            32: { status: 'Blank', text: 'Book Now' },
-            33: { status: 'Blank', text: 'Book Now' },
-            34: { status: 'Blank', text: 'Book Now' },
-            35: { status: 'Expiring', text: '5 Days Left' },
-            36: { status: 'Blank', text: 'Book Now' },
-            37: { status: 'Blank', text: 'Book Now' },
-            38: { status: 'Blank', text: 'Book Now' },
-            39: { status: 'Blank', text: 'Book Now' },
-            40: { status: 'Blank', text: 'Book Now' },
-            41: { status: 'Blank', text: 'Book Now' },
-            42: { status: 'Blank', text: 'Book Now' },
-            43: { status: 'Blank', text: 'Book Now' },
-            44: { status: 'Blank', text: 'Book Now' },
-            45: { status: 'Booked', text: 'Booked' },
-            46: { status: 'Blank', text: 'Book Now' },
-            47: { status: 'Blank', text: 'Book Now' },
-            48: { status: 'Blank', text: 'Book Now' },
-            49: { status: 'Blank', text: 'Book Now' },
-            50: { status: 'Blank', text: 'Book Now' },
-            51: { status: 'Blank', text: 'Book Now' },
-            52: { status: 'Blank', text: 'Book Now' },
-            53: { status: 'Blank', text: 'Book Now' },
-            54: { status: 'Blank', text: 'Book Now' },
-            55: { status: 'Booked', text: 'Booked' },
-            56: { status: 'Blank', text: 'Book Now' },
-            57: { status: 'Blank', text: 'Book Now' },
-            58: { status: 'Blank', text: 'Book Now' },
-            59: { status: 'Blank', text: 'Book Now' },
-            60: { status: 'Blank', text: 'Book Now' },
-            61: { status: 'Blank', text: 'Book Now' },
-            62: { status: 'Blank', text: 'Book Now' },
-            63: { status: 'Blank', text: 'Book Now' },
-            64: { status: 'Blank', text: 'Book Now' },
-            65: { status: 'Booked', text: 'Booked' },
-            66: { status: 'Blank', text: 'Book Now' },
-            67: { status: 'Blank', text: 'Book Now' },
-            68: { status: 'Blank', text: 'Book Now' },
-            69: { status: 'Blank', text: 'Book Now' },
-            70: { status: 'Blank', text: 'Book Now' },
-            71: { status: 'Blank', text: 'Book Now' },
-            72: { status: 'Blank', text: 'Book Now' },
-            73: { status: 'Blank', text: 'Book Now' },
-            74: { status: 'Blank', text: 'Book Now' },
-            75: { status: 'Booked', text: 'Booked' },
-            76: { status: 'Blank', text: 'Book Now' },
-            77: { status: 'Blank', text: 'Book Now' },
-            78: { status: 'Blank', text: 'Book Now' },
-            79: { status: 'Blank', text: 'Book Now' },
-            80: { status: 'Blank', text: 'Book Now' },
-            81: { status: 'Blank', text: 'Book Now' },
-            82: { status: 'Blank', text: 'Book Now' },
-            83: { status: 'Blank', text: 'Book Now' },
-            84: { status: 'Blank', text: 'Book Now' },
-            85: { status: 'Booked', text: 'Booked' },
-            86: { status: 'Blank', text: 'Book Now' },
-            87: { status: 'Blank', text: 'Book Now' },
-            88: { status: 'Blank', text: 'Book Now' },
-            89: { status: 'Blank', text: 'Book Now' },
-            90: { status: 'Blank', text: 'Book Now' },
-            91: { status: 'Blank', text: 'Book Now' },
-            92: { status: 'Blank', text: 'Book Now' },
-            93: { status: 'Blank', text: 'Book Now' },
-            94: { status: 'Blank', text: 'Book Now' },
-            95: { status: 'Booked', text: 'Booked' },
-            96: { status: 'Blank', text: 'Book Now' },
-            97: { status: 'Blank', text: 'Book Now' },
-            98: { status: 'Blank', text: 'Book Now' },
-            99: { status: 'Blank', text: 'Book Now' },
-            100: { status: 'Booked', text: 'Booked' }
+            1: { status: 'Blank', text: 'Book Now', name: '' },
+            2: { status: 'Blank', text: 'Book Now', name: '' },
+            3: { status: 'Booked', text: 'Booked', name: 'Rahul Sharma' },
+            4: { status: 'Blank', text: 'Book Now', name: '' },
+            5: { status: 'Blank', text: 'Book Now', name: '' },
+            6: { status: 'Expiring', text: '4 Days Left', name: 'Amit Kumar' },
+            7: { status: 'Blank', text: 'Book Now', name: '' },
+            8: { status: 'Blank', text: 'Book Now', name: '' },
+            9: { status: 'Blank', text: 'Book Now', name: '' },
+            10: { status: 'Blank', text: 'Book Now', name: '' },
+            11: { status: 'Blank', text: 'Book Now', name: '' },
+            12: { status: 'Booked', text: 'Booked', name: 'Priya Verma' },
+            13: { status: 'Blank', text: 'Book Now', name: '' },
+            14: { status: 'Blank', text: 'Book Now', name: '' },
+            15: { status: 'Expiring', text: '3 Days Left', name: 'Deepak Singh' },
+            16: { status: 'Blank', text: 'Book Now', name: '' },
+            17: { status: 'Blank', text: 'Book Now', name: '' },
+            18: { status: 'Blank', text: 'Book Now', name: '' },
+            19: { status: 'Blank', text: 'Book Now', name: '' },
+            20: { status: 'Blank', text: 'Book Now', name: '' },
+            21: { status: 'Blank', text: 'Book Now', name: '' },
+            22: { status: 'Blank', text: 'Book Now', name: '' },
+            23: { status: 'Blank', text: 'Book Now', name: '' },
+            24: { status: 'Blank', text: 'Book Now', name: '' },
+            25: { status: 'Booked', text: 'Booked', name: 'Neha Gupta' },
+            26: { status: 'Blank', text: 'Book Now', name: '' },
+            27: { status: 'Blank', text: 'Book Now', name: '' },
+            28: { status: 'Blank', text: 'Book Now', name: '' },
+            29: { status: 'Blank', text: 'Book Now', name: '' },
+            30: { status: 'Blank', text: 'Book Now', name: '' },
+            31: { status: 'Blank', text: 'Book Now', name: '' },
+            32: { status: 'Blank', text: 'Book Now', name: '' },
+            33: { status: 'Blank', text: 'Book Now', name: '' },
+            34: { status: 'Blank', text: 'Book Now', name: '' },
+            35: { status: 'Expiring', text: '5 Days Left', name: 'Vikas Meena' },
+            36: { status: 'Blank', text: 'Book Now', name: '' },
+            37: { status: 'Blank', text: 'Book Now', name: '' },
+            38: { status: 'Blank', text: 'Book Now', name: '' },
+            39: { status: 'Blank', text: 'Book Now', name: '' },
+            40: { status: 'Blank', text: 'Book Now', name: '' },
+            41: { status: 'Blank', text: 'Book Now', name: '' },
+            42: { status: 'Blank', text: 'Book Now', name: '' },
+            43: { status: 'Blank', text: 'Book Now', name: '' },
+            44: { status: 'Blank', text: 'Book Now', name: '' },
+            45: { status: 'Booked', text: 'Booked', name: 'Rohitashva' },
+            46: { status: 'Blank', text: 'Book Now', name: '' },
+            47: { status: 'Blank', text: 'Book Now', name: '' },
+            48: { status: 'Blank', text: 'Book Now', name: '' },
+            49: { status: 'Blank', text: 'Book Now', name: '' },
+            50: { status: 'Blank', text: 'Book Now', name: '' },
+            51: { status: 'Blank', text: 'Book Now', name: '' },
+            52: { status: 'Blank', text: 'Book Now', name: '' },
+            53: { status: 'Blank', text: 'Book Now', name: '' },
+            54: { status: 'Blank', text: 'Book Now', name: '' },
+            55: { status: 'Booked', text: 'Booked', name: 'Anjali Jain' },
+            56: { status: 'Blank', text: 'Book Now', name: '' },
+            57: { status: 'Blank', text: 'Book Now', name: '' },
+            58: { status: 'Blank', text: 'Book Now', name: '' },
+            59: { status: 'Blank', text: 'Book Now', name: '' },
+            60: { status: 'Blank', text: 'Book Now', name: '' },
+            61: { status: 'Blank', text: 'Book Now', name: '' },
+            62: { status: 'Blank', text: 'Book Now', name: '' },
+            63: { status: 'Blank', text: 'Book Now', name: '' },
+            64: { status: 'Blank', text: 'Book Now', name: '' },
+            65: { status: 'Booked', text: 'Booked', name: 'Manish Goyal' },
+            66: { status: 'Blank', text: 'Book Now', name: '' },
+            67: { status: 'Blank', text: 'Book Now', name: '' },
+            68: { status: 'Blank', text: 'Book Now', name: '' },
+            69: { status: 'Blank', text: 'Book Now', name: '' },
+            70: { status: 'Blank', text: 'Book Now', name: '' },
+            71: { status: 'Blank', text: 'Book Now', name: '' },
+            72: { status: 'Blank', text: 'Book Now', name: '' },
+            73: { status: 'Blank', text: 'Book Now', name: '' },
+            74: { status: 'Blank', text: 'Book Now', name: '' },
+            75: { status: 'Booked', text: 'Booked', name: 'Pooja Kumari' },
+            76: { status: 'Blank', text: 'Book Now', name: '' },
+            77: { status: 'Blank', text: 'Book Now', name: '' },
+            78: { status: 'Blank', text: 'Book Now', name: '' },
+            79: { status: 'Blank', text: 'Book Now', name: '' },
+            80: { status: 'Blank', text: 'Book Now', name: '' },
+            81: { status: 'Blank', text: 'Book Now', name: '' },
+            82: { status: 'Blank', text: 'Book Now', name: '' },
+            83: { status: 'Blank', text: 'Book Now', name: '' },
+            84: { status: 'Blank', text: 'Book Now', name: '' },
+            85: { status: 'Booked', text: 'Booked', name: 'Sandeep Kumar' },
+            86: { status: 'Blank', text: 'Book Now', name: '' },
+            87: { status: 'Blank', text: 'Book Now', name: '' },
+            88: { status: 'Blank', text: 'Book Now', name: '' },
+            89: { status: 'Blank', text: 'Book Now', name: '' },
+            90: { status: 'Blank', text: 'Book Now', name: '' },
+            91: { status: 'Blank', text: 'Book Now', name: '' },
+            92: { status: 'Blank', text: 'Book Now', name: '' },
+            93: { status: 'Blank', text: 'Book Now', name: '' },
+            94: { status: 'Blank', text: 'Book Now', name: '' },
+            95: { status: 'Booked', text: 'Booked', name: 'Kajal Rathore' },
+            96: { status: 'Blank', text: 'Book Now', name: '' },
+            97: { status: 'Blank', text: 'Book Now', name: '' },
+            98: { status: 'Blank', text: 'Book Now', name: '' },
+            99: { status: 'Blank', text: 'Book Now', name: '' },
+            100: { status: 'Booked', text: 'Booked', name: 'Sunil Choudhary' }
         };
 
         let selectedSeat = null;
@@ -572,16 +587,18 @@
             let bookedCount = 0;
 
             for (let i = 1; i <= 100; i++) {
-                const seatInfo = seatMapData[i] || { status: "Blank", text: "Book Now" };
+                const seatInfo = seatMapData[i] || { status: "Blank", text: "Book Now", name: "" };
                 const seatDiv = document.createElement('div');
                 
+                let nameHtml = seatInfo.name ? `<div class="seat-name">${seatInfo.name}</div>` : '';
+
                 if (seatInfo.status === "Booked") {
                     seatDiv.className = 'seat booked';
-                    seatDiv.innerHTML = `<div class="seat-number">#${i}</div><div class="seat-status">Booked</div>`;
+                    seatDiv.innerHTML = `<div class="seat-number">#${i}</div><div class="seat-status">Booked</div>${nameHtml}`;
                     bookedCount++;
                 } else if (seatInfo.status === "Expiring") {
                     seatDiv.className = 'seat expiring';
-                    seatDiv.innerHTML = `<div class="seat-number">#${i}</div><div class="seat-status">${seatInfo.text}</div>`;
+                    seatDiv.innerHTML = `<div class="seat-number">#${i}</div><div class="seat-status">${seatInfo.text}</div>${nameHtml}`;
                     seatDiv.onclick = () => openModal(i, "Expiring");
                     expiringCount++;
                 } else {
@@ -600,15 +617,14 @@
 
         function openModal(seatNo, status) {
             selectedSeat = seatNo;
-            let title = `🪑 सीट नंबर #${seatNo} बुकिंग फॉर्म 📝`;
+            let title = `🪑 Seat Number #${seatNo} Booking Form 📝`;
             if (status === "Expiring") {
-                title = `🔄 सीट नंबर #${seatNo} रिन्यूअल फॉर्म ⏳`;
+                title = `🔄 Seat Number #${seatNo} Renewal Form ⏳`;
             }
             document.getElementById('modalTitle').innerText = title;
             
-            // Updated PhonePe UPI Intent URL with 9413618248-2@ybl
             const upiId = "9413618248-2@ybl";
-            const name = "Hitech Library";
+            const name = "Hi-Tech Library Nohar";
             const amount = "800.00";
             const note = `Library Seat No ${seatNo} Booking`;
             
@@ -626,11 +642,11 @@
             const exam = document.getElementById('studentExam').value.trim();
 
             if (!name || !phone || !address || !exam) {
-                alert("⚠️ कृपया पहले अपनी सभी डिटेल्स (नाम, मोबाइल, पता, एग्जाम) भरें!");
+                alert("⚠️ Please fill in all your details (Name, Mobile, Address, Exam) first!");
                 return;
             }
 
-            const message = `✨ *नमस्ते सर/मैडम!* 🙏\n\nमैंने हाईटेक लाइब्रेरी के लिए सीट नंबर *#${selectedSeat}* की फीस *₹800* PhonePe से पे कर दी है। 💳✅\n\n📋 *मेरी डिटेल्स:*\n👤 नाम: ${name}\n📱 मोबाइल: ${phone}\n📍 पता: ${address}\n🎯 एग्जाम: ${exam}\n\n🚀 मैं कल से लाइब्रेरी आ जाऊंगा। कृपया मेरी सीट कन्फर्म करें। धन्यवाद! 😊📚`;
+            const message = `✨ *Hello Sir/Madam!* 🙏\n\nI have paid the fee of *₹800* via PhonePe for Seat Number *#${selectedSeat}* at Hi-Tech Library Nohar. 💳✅\n\n📋 *My Details:*\n👤 Name: ${name}\n📱 Mobile: ${phone}\n📍 Address: ${address}\n🎯 Exam: ${exam}\n\n🚀 I will be coming to the library starting tomorrow. Please confirm my seat. Thank you! 😊📚`;
             
             const whatsappUrl = `https://wa.me/919413618248?text=${encodeURIComponent(message)}`;
             
