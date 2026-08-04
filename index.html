@@ -107,27 +107,44 @@
             font-size: 1.6rem;
         }
 
-        /* WiFi Password Banner */
+        /* Animated WiFi Password Banner */
         .wifi-banner {
             max-width: 1000px;
             margin: 0 auto 25px auto;
-            background: linear-gradient(135deg, #27272a, #3f3f46);
-            border: 2px dashed var(--primary);
+            background: linear-gradient(135deg, #1e1b4b, #312e81, #1e1b4b);
+            background-size: 200% 200%;
+            animation: gradientMove 5s ease infinite;
+            border: 3px solid transparent;
+            border-image: linear-gradient(45deg, #f59e0b, #ec4899, #3b82f6, #10b981) 1;
             border-radius: 12px;
-            padding: 15px 20px;
+            padding: 18px 20px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.3);
+            position: relative;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         .wifi-banner h3 {
-            color: var(--primary);
-            font-size: 1.2rem;
+            color: #fbbf24;
+            font-size: 1.3rem;
             margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
         .wifi-banner p {
-            font-size: 1.1rem;
-            color: #f4f4f5;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+            font-size: 1.2rem;
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.6);
+            animation: pulseText 1.5s infinite;
+        }
+        @keyframes pulseText {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
         }
 
         /* Features Section */
@@ -397,7 +414,7 @@
         </div>
     </div>
 
-    <!-- WiFi Password Block -->
+    <!-- Animated WiFi Password Block -->
     <div class="wifi-banner" id="wifiBannerContainer" style="display: none;">
         <h3>📶 High-Speed Wi-Fi Password</h3>
         <p id="wifiPasswordText">Loading WiFi Password...</p>
@@ -578,7 +595,7 @@
             }
 
             // Display WiFi Password if available
-            if (wifiPassword && wifiPassword !== "Blank" && wifiPassword !== "Status" && wifiPassword !== "Wi-Fi Password") {
+            if (wifiPassword && wifiPassword !== "Blank" && wifiPassword !== "Status") {
                 document.getElementById('wifiPasswordText').innerText = `🔑 Password is: ${wifiPassword}`;
                 document.getElementById('wifiBannerContainer').style.display = 'block';
             } else {
@@ -625,7 +642,7 @@
             document.getElementById('booked-seats').innerText = bookedCount;
         }
 
-        function openModal(seatNo, status) {
+    function openModal(seatNo, status) {
             selectedSeat = seatNo;
             let title = `🪑 Seat Number #${seatNo} Booking Form 📝`;
             if (status === "Expiring") {
