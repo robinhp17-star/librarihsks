@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>हाईटेक लाइब्रेरी - सीट बुकिंग और प्रबंधन</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #38bdf8;
+            --free: #22c55e;
+            --warning: #eab308;
+            --booked: #ef4444;
+            --whatsapp: #25d366;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        /* Floating WhatsApp Help Button */
+        .float-whatsapp {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--whatsapp);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 99;
+            transition: transform 0.2s;
+        }
+        .float-whatsapp:hover {
+            transform: scale(1.05);
+        }
+        .float-whatsapp i {
+            font-size: 1.5rem;
+        }
+
+        /* Features Section */
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+        }
+        .feature-card {
+            background: var(--bg-card);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border-bottom: 3px solid var(--primary);
+        }
+        .feature-card i {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .feature-card h4 {
+            font-size: 1rem;
+            margin-bottom: 3px;
+        }
+        .feature-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Stats Section */
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .stat-box {
+            background: var(--bg-card);
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            min-width: 130px;
+        }
+        .stat-box h3 {
+            font-size: 1.4rem;
+            margin-bottom: 2px;
+        }
+        .stat-box.total h3 { color: var(--primary); }
+        .stat-box.available h3 { color: var(--free); }
+        .stat-box.expiring h3 { color: var(--warning); }
+        .stat-box.booked h3 { color: var(--booked); }
+        .stat-box p { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .color-box {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+        .color-box.free { background-color: var(--free); }
+        .color-box.warning { background-color: var(--warning); }
+        .color-box.reserved { background-color: var(--booked); }
+
+        /* Seats Grid */
+        .seats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+            gap: 12px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: var(--bg-card);
+            border-radius: 15px;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.4);
+        }
+        .seat {
+            padding: 12px 8px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            font-weight: 600;
+        }
+        .seat.blank {
+            background-color: var(--free);
+            color: #fff;
+        }
+        .seat.blank:hover {
+            transform: scale(1.05);
+            background-color: #16a34a;
+        }
+        .seat.expiring {
+            background-color: var(--warning);
+            color: #1e293b;
+        }
+        .seat.expiring:hover {
+            transform: scale(1.05);
+            background-color: #ca8a04;
+        }
+        .seat.booked {
+            background-color: var(--booked);
+            color: #fff;
+            cursor: not-allowed;
+            opacity: 0.9;
+        }
+        .seat-number {
+            font-size: 1rem;
+            margin-bottom: 3px;
+        }
+        .seat-status {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .modal-content {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border: 1px solid #334155;
+            text-align: left;
+        }
+        .modal-content h2 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+        .modal-content p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: white;
+            font-size: 0.95rem;
+        }
+        .pay-btn {
+            display: block;
+            background: #6366f1;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            transition: background 0.2s;
+        }
+        .pay-btn:hover {
+            background: #4f46e5;
+        }
+        .whatsapp-confirm-btn {
+            display: none;
+            background: var(--whatsapp);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .close-btn:hover {
+            color: #fff;
+        }
+        footer {
+            text-align: center;
+            margin-top: 35px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>हाईटेक लाइब्रेरी</h1>
+        <p>पढ़ाई के लिए शांत और आधुनिक वातावरण - मात्र ₹800 प्रति माह</p>
+    </header>
+
+    <!-- Floating WhatsApp Help Button -->
+    <a href="https://wa.me/919413618248?text=नमस्ते,%20मुझे%20हाईटेक%20लाइब्रेरी%20के%20बारे%20में%20कुछ%20जानकारी%20चाहिए।" class="float-whatsapp" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i> सहायता के लिए चैट करें
+    </a>
+
+    <!-- लाइब्रेरी के फीचर्स -->
+    <div class="features-container">
+        <div class="feature-card">
+            <i class="fa-solid fa-wifi"></i>
+            <h4>1 Gbps हाई-स्पीड वाई-फाई</h4>
+            <p>बिना रुकावट ऑनलाइन स्टडी</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-droplet"></i>
+            <h4>शुद्ध आरओ वाटर</h4>
+            <p>ठंडा और स्वच्छ पेयजल</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-snowflake"></i>
+            <h4>फुल्ली एयर कंडीशन (AC)</h4>
+            <p>आरामदायक वातावरण</p>
+        </div>
+        <div class="feature-card">
+            <i class="fa-solid fa-charging-station"></i>
+            <h4>चार्जिंग सॉकेट</h4>
+            <p>हर सीट पर लैपटॉप/मोबाइल चार्जिंग</p>
+        </div>
+    </div>
+
+    <!-- स्टैट्स काउंटर -->
+    <div class="stats-container">
+        <div class="stat-box total">
+            <h3 id="total-seats">100</h3>
+            <p>कुल सीट्स</p>
+        </div>
+        <div class="stat-box available">
+            <h3 id="free-seats">--</h3>
+            <p>खाली (Blank)</p>
+        </div>
+        <div class="stat-box expiring">
+            <h3 id="expiring-seats">--</h3>
+            <p>रिन्यूअल बाकी</p>
+        </div>
+        <div class="stat-box booked">
+            <h3 id="booked-seats">--</h3>
+            <p>बुकड</p>
+        </div>
+    </div>
+
+    <!-- लीजेंड -->
+    <div class="legend">
+        <div class="legend-item"><div class="color-box free"></div> Blank (Book Now)</div>
+        <div class="legend-item"><div class="color-box warning"></div> Renewal Due (Yellow)</div>
+        <div class="legend-item"><div class="color-box reserved"></div> Booked (Red)</div>
+    </div>
+
+    <!-- सीट्स ग्रिड -->
+    <div class="seats-grid" id="seatsGrid">
+        <!-- सीट्स यहाँ लोड होंगी -->
+    </div>
+
+    <!-- बुकिंग और एडमिशन मॉडल -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <h2 id="modalTitle">सीट बुकिंग और एडमिशन</h2>
+            <p id="modalText">अपनी डिटेल्स भरें और PhonePe से ₹800 भुगतान करें।</p>
+            
+            <div class="form-group">
+                <label>पूरा नाम (Full Name)</label>
+                <input type="text" id="studentName" placeholder="अपना नाम लिखें">
+            </div>
+            <div class="form-group">
+                <label>मोबाइल नंबर (Mobile Number)</label>
+                <input type="tel" id="studentPhone" placeholder="10 अंकों का मोबाइल नंबर">
+            </div>
+            <div class="form-group">
+                <label>पता (Address / City)</label>
+                <input type="text" id="studentAddress" placeholder="गाड़ी या शहर का नाम">
+            </div>
+            <div class="form-group">
+                <label>किस एग्जाम की तैयारी कर रहे हैं?</label>
+                <input type="text" id="studentExam" placeholder="जैसे: RPSC, RAS, NEET, SSC">
+            </div>
+
+            <a href="#" id="phonepeLink" class="pay-btn" onclick="enableWhatsAppBtn()">1. PhonePe से ₹800 भुगतान करें</a>
+            
+            <a href="#" id="whatsappBtn" class="whatsapp-confirm-btn" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i> 2. WhatsApp पर कन्फर्मेशन भेजें
+            </a>
+
+            <button class="close-btn" onclick="closeModal()">रद्द करें</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 हाईटेक लाइब्रेरी | सभी अधिकार सुरक्षित</p>
+    </footer>
+
+    <script>
+        const seatMapData = {
+            1: { status: 'Blank', text: 'Book Now' },
+            2: { status: 'Blank', text: 'Book Now' },
+            3: { status: 'Booked', text: 'Booked' },
+            4: { status: 'Blank', text: 'Book Now' },
+            5: { status: 'Blank', text: 'Book Now' },
+            6: { status: 'Expiring', text: '4 Days Left' },
+            7: { status: 'Blank', text: 'Book Now' },
+            8: { status: 'Blank', text: 'Book Now' },
+            9: { status: 'Blank', text: 'Book Now' },
+            10: { status: 'Blank', text: 'Book Now' },
+            11: { status: 'Blank', text: 'Book Now' },
+            12: { status: 'Booked', text: 'Booked' },
+            13: { status: 'Blank', text: 'Book Now' },
+            14: { status: 'Blank', text: 'Book Now' },
+            15: { status: 'Expiring', text: '3 Days Left' },
+            16: { status: 'Blank', text: 'Book Now' },
+            17: { status: 'Blank', text: 'Book Now' },
+            18: { status: 'Blank', text: 'Book Now' },
+            19: { status: 'Blank', text: 'Book Now' },
+            20: { status: 'Blank', text: 'Book Now' },
+            21: { status: 'Blank', text: 'Book Now' },
+            22: { status: 'Blank', text: 'Book Now' },
+            23: { status: 'Blank', text: 'Book Now' },
+            24: { status: 'Blank', text: 'Book Now' },
+            25: { status: 'Booked', text: 'Booked' },
+            26: { status: 'Blank', text: 'Book Now' },
+            27: { status: 'Blank', text: 'Book Now' },
+            28: { status: 'Blank', text: 'Book Now' },
+            29: { status: 'Blank', text: 'Book Now' },
+            30: { status: 'Blank', text: 'Book Now' },
+            31: { status: 'Blank', text: 'Book Now' },
+            32: { status: 'Blank', text: 'Book Now' },
+            33: { status: 'Blank', text: 'Book Now' },
+            34: { status: 'Blank', text: 'Book Now' },
+            35: { status: 'Expiring', text: '5 Days Left' },
+            36: { status: 'Blank', text: 'Book Now' },
+            37: { status: 'Blank', text: 'Book Now' },
+            38: { status: 'Blank', text: 'Book Now' },
+            39: { status: 'Blank', text: 'Book Now' },
+            40: { status: 'Blank', text: 'Book Now' },
+            41: { status: 'Blank', text: 'Book Now' },
+            42: { status: 'Blank', text: 'Book Now' },
+            43: { status: 'Blank', text: 'Book Now' },
+            44: { status: 'Blank', text: 'Book Now' },
+            45: { status: 'Booked', text: 'Booked' },
+            46: { status: 'Blank', text: 'Book Now' },
+            47: { status: 'Blank', text: 'Book Now' },
+            48: { status: 'Blank', text: 'Book Now' },
+            49: { status: 'Blank', text: 'Book Now' },
+            50: { status: 'Blank', text: 'Book Now' },
+            51: { status: 'Blank', text: 'Book Now' },
+            52: { status: 'Blank', text: 'Book Now' },
+            53: { status: 'Blank', text: 'Book Now' },
+            54: { status: 'Blank', text: 'Book Now' },
+            55: { status: 'Booked', text: 'Booked' },
+            56: { status: 'Blank', text: 'Book Now' },
+            57: { status: 'Blank', text: 'Book Now' },
+            58: { status: 'Blank', text: 'Book Now' },
+            59: { status: 'Blank', text: 'Book Now' },
+            60: { status: 'Blank', text: 'Book Now' },
+            61: { status: 'Blank', text: 'Book Now' },
+            62: { status: 'Blank', text: 'Book Now' },
+            63: { status: 'Blank', text: 'Book Now' },
+            64: { status: 'Blank', text: 'Book Now' },
+            65: { status: 'Booked', text: 'Booked' },
+            66: { status: 'Blank', text: 'Book Now' },
+            67: { status: 'Blank', text: 'Book Now' },
+            68: { status: 'Blank', text: 'Book Now' },
+            69: { status: 'Blank', text: 'Book Now' },
+            70: { status: 'Blank', text: 'Book Now' },
+            71: { status: 'Blank', text: 'Book Now' },
+            72: { status: 'Blank', text: 'Book Now' },
+            73: { status: 'Blank', text: 'Book Now' },
+            74: { status: 'Blank', text: 'Book Now' },
+            75: { status: 'Booked', text: 'Booked' },
+            76: { status: 'Blank', text: 'Book Now' },
+            77: { status: 'Blank', text: 'Book Now' },
+            78: { status: 'Blank', text: 'Book Now' },
+            79: { status: 'Blank', text: 'Book Now' },
+            80: { status: 'Blank', text: 'Book Now' },
+            81: { status: 'Blank', text: 'Book Now' },
+            82: { status: 'Blank', text: 'Book Now' },
+            83: { status: 'Blank', text: 'Book Now' },
+            84: { status: 'Blank', text: 'Book Now' },
+            85: { status: 'Booked', text: 'Booked' },
+            86: { status: 'Blank', text: 'Book Now' },
+            87: { status: 'Blank', text: 'Book Now' },
+            88: { status: 'Blank', text: 'Book Now' },
+            89: { status: 'Blank', text: 'Book Now' },
+            90: { status: 'Blank', text: 'Book Now' },
+            91: { status: 'Blank', text: 'Book Now' },
+            92: { status: 'Blank', text: 'Book Now' },
+            93: { status: 'Blank', text: 'Book Now' },
+            94: { status: 'Blank', text: 'Book Now' },
+            95: { status: 'Booked', text: 'Booked' },
+            96: { status: 'Blank', text: 'Book Now' },
+            97: { status: 'Blank', text: 'Book Now' },
+            98: { status: 'Blank', text: 'Book Now' },
+            99: { status: 'Blank', text: 'Book Now' },
+            100: { status: 'Booked', text: 'Booked' }
+        };
+
+        let selectedSeat = null;
+
+        function loadSeats() {
+            const grid = document.getElementById('seatsGrid');
+            grid.innerHTML = '';
+            
+            let freeCount = 0;
+            let expiringCount = 0;
+            let bookedCount = 0;
+
+            for (let i = 1; i <= 100; i++) {
+                const seatInfo = seatMapData[i] || { status: "Blank", text: "Book Now" };
+                const seatDiv = document.createElement('div');
+                
+                if (seatInfo.status === "Booked") {
+                    seatDiv.className = 'seat booked';
+                    seatDiv.innerHTML = `<div class="seat-number">#${i}</div><div class="seat-status">Booked</div>`;
+                    bookedCount++;
+                } else if (seatInfo.status === "Expiring") {
+                    seatDiv.className = 'seat expiring';
+                    seatDiv.innerHTML = `<div class="seat-number">#${i}</div><div class="seat-status">${seatInfo.text}</div>`;
+                    seatDiv.onclick = () => openModal(i, "Expiring");
+                    expiringCount++;
+                } else {
+                    seatDiv.className = 'seat blank';
+                    seatDiv.innerHTML = `<div class="seat-number">#${i}</div><div class="seat-status">Book Now</div>`;
+                    seatDiv.onclick = () => openModal(i, "Blank");
+                    freeCount++;
+                }
+                grid.appendChild(seatDiv);
+            }
+
+            document.getElementById('free-seats').innerText = freeCount;
+            document.getElementById('expiring-seats').innerText = expiringCount;
+            document.getElementById('booked-seats').innerText = bookedCount;
+        }
+
+        function openModal(seatNo, status) {
+            selectedSeat = seatNo;
+            let title = `सीट नंबर #${seatNo} बुकिंग फॉर्म`;
+            if (status === "Expiring") {
+                title = `सीट नंबर #${seatNo} रिन्यूअल फॉर्म`;
+            }
+            document.getElementById('modalTitle').innerText = title;
+            
+            // PhonePe UPI Intent URL
+            const upiId = "941361824838@ybl";
+            const name = "Hitech Library";
+            const amount = "800.00";
+            const note = `Library Seat No ${seatNo} Booking`;
+            
+            const phonepeUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+            
+            document.getElementById('phonepeLink').href = phonepeUrl;
+            document.getElementById('whatsappBtn').style.display = 'none'; // शुरू में छिपा रखें जब तक पेमेंट बटन पर क्लिक न हो
+            document.getElementById('bookingModal').style.display = 'flex';
+        }
+
+        function enableWhatsAppBtn() {
+            const name = document.getElementById('studentName').value.trim();
+            const phone = document.getElementById('studentPhone').value.trim();
+            const address = document.getElementById('studentAddress').value.trim();
+            const exam = document.getElementById('studentExam').value.trim();
+
+            if (!name || !phone || !address || !exam) {
+                alert("कृपया पहले अपनी सभी डिटेल्स (नाम, मोबाइल, पता, एग्जाम) भरें!");
+                return;
+            }
+
+            // WhatsApp Message Text
+            const message = `नमस्ते, मैंने हाईटेक लाइब्रेरी के लिए सीट नंबर #${selectedSeat} की फीस ₹800 पे कर दी है।\n\nमेरी डिटेल्स:\n• नाम: ${name}\n• मोबाइल: ${phone}\n• पता: ${address}\n• एग्जाम: ${exam}\n\nमैं कल से लाइब्रेरी आ जाऊंगा। कृपया मेरी सीट कन्फर्म करें।`;
+            
+            const whatsappUrl = `https://wa.me/919413618248?text=${encodeURIComponent(message)}`;
+            
+            const waBtn = document.getElementById('whatsappBtn');
+            waBtn.href = whatsappUrl;
+            waBtn.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+        }
+
+        window.onload = loadSeats;
+    </script>
+</body>
+</html>
