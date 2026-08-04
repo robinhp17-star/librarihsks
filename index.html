@@ -432,7 +432,7 @@
 
     <!-- Seats Grid -->
     <div class="seats-grid" id="seatsGrid">
-        <!-- Seats will load here -->
+        <div style="grid-column: 1/-1; text-align: center; color: #a1a1aa; padding: 20px;">Loading Live Seat Data from Google Sheets... ⏳</div>
     </div>
 
     <!-- Booking and Admission Modal -->
@@ -458,7 +458,7 @@
                 <input type="text" id="studentExam" placeholder="e.g., RPSC, RAS, NEET, SSC">
             </div>
 
-            <a href="#" id="phonepeLink" class="pay-btn" onclick="enableWhatsAppBtn()">1. 💳 Pay ₹800 via PhonePe</a>
+            <a href="#" id="phonepeLink" class="pay-btn" onclick="handleBookingPayment()">1. 💳 Pay ₹800 via PhonePe</a>
             
             <a href="#" id="whatsappBtn" class="whatsapp-confirm-btn" target="_blank">
                 <i class="fa-brands fa-whatsapp"></i> 2. 🚀 Send Confirmation on WhatsApp
@@ -473,112 +473,28 @@
     </footer>
 
     <script>
-        const seatMapData = {
-            1: { status: 'Blank', text: 'Book Now', name: '' },
-            2: { status: 'Blank', text: 'Book Now', name: '' },
-            3: { status: 'Booked', text: 'Booked', name: 'Rahul Sharma' },
-            4: { status: 'Blank', text: 'Book Now', name: '' },
-            5: { status: 'Blank', text: 'Book Now', name: '' },
-            6: { status: 'Expiring', text: '4 Days Left', name: 'Amit Kumar' },
-            7: { status: 'Blank', text: 'Book Now', name: '' },
-            8: { status: 'Blank', text: 'Book Now', name: '' },
-            9: { status: 'Blank', text: 'Book Now', name: '' },
-            10: { status: 'Blank', text: 'Book Now', name: '' },
-            11: { status: 'Blank', text: 'Book Now', name: '' },
-            12: { status: 'Booked', text: 'Booked', name: 'Priya Verma' },
-            13: { status: 'Blank', text: 'Book Now', name: '' },
-            14: { status: 'Blank', text: 'Book Now', name: '' },
-            15: { status: 'Expiring', text: '3 Days Left', name: 'Deepak Singh' },
-            16: { status: 'Blank', text: 'Book Now', name: '' },
-            17: { status: 'Blank', text: 'Book Now', name: '' },
-            18: { status: 'Blank', text: 'Book Now', name: '' },
-            19: { status: 'Blank', text: 'Book Now', name: '' },
-            20: { status: 'Blank', text: 'Book Now', name: '' },
-            21: { status: 'Blank', text: 'Book Now', name: '' },
-            22: { status: 'Blank', text: 'Book Now', name: '' },
-            23: { status: 'Blank', text: 'Book Now', name: '' },
-            24: { status: 'Blank', text: 'Book Now', name: '' },
-            25: { status: 'Booked', text: 'Booked', name: 'Neha Gupta' },
-            26: { status: 'Blank', text: 'Book Now', name: '' },
-            27: { status: 'Blank', text: 'Book Now', name: '' },
-            28: { status: 'Blank', text: 'Book Now', name: '' },
-            29: { status: 'Blank', text: 'Book Now', name: '' },
-            30: { status: 'Blank', text: 'Book Now', name: '' },
-            31: { status: 'Blank', text: 'Book Now', name: '' },
-            32: { status: 'Blank', text: 'Book Now', name: '' },
-            33: { status: 'Blank', text: 'Book Now', name: '' },
-            34: { status: 'Blank', text: 'Book Now', name: '' },
-            35: { status: 'Expiring', text: '5 Days Left', name: 'Vikas Meena' },
-            36: { status: 'Blank', text: 'Book Now', name: '' },
-            37: { status: 'Blank', text: 'Book Now', name: '' },
-            38: { status: 'Blank', text: 'Book Now', name: '' },
-            39: { status: 'Blank', text: 'Book Now', name: '' },
-            40: { status: 'Blank', text: 'Book Now', name: '' },
-            41: { status: 'Blank', text: 'Book Now', name: '' },
-            42: { status: 'Blank', text: 'Book Now', name: '' },
-            43: { status: 'Blank', text: 'Book Now', name: '' },
-            44: { status: 'Blank', text: 'Book Now', name: '' },
-            45: { status: 'Booked', text: 'Booked', name: 'Rohitashva' },
-            46: { status: 'Blank', text: 'Book Now', name: '' },
-            47: { status: 'Blank', text: 'Book Now', name: '' },
-            48: { status: 'Blank', text: 'Book Now', name: '' },
-            49: { status: 'Blank', text: 'Book Now', name: '' },
-            50: { status: 'Blank', text: 'Book Now', name: '' },
-            51: { status: 'Blank', text: 'Book Now', name: '' },
-            52: { status: 'Blank', text: 'Book Now', name: '' },
-            53: { status: 'Blank', text: 'Book Now', name: '' },
-            54: { status: 'Blank', text: 'Book Now', name: '' },
-            55: { status: 'Booked', text: 'Booked', name: 'Anjali Jain' },
-            56: { status: 'Blank', text: 'Book Now', name: '' },
-            57: { status: 'Blank', text: 'Book Now', name: '' },
-            58: { status: 'Blank', text: 'Book Now', name: '' },
-            59: { status: 'Blank', text: 'Book Now', name: '' },
-            60: { status: 'Blank', text: 'Book Now', name: '' },
-            61: { status: 'Blank', text: 'Book Now', name: '' },
-            62: { status: 'Blank', text: 'Book Now', name: '' },
-            63: { status: 'Blank', text: 'Book Now', name: '' },
-            64: { status: 'Blank', text: 'Book Now', name: '' },
-            65: { status: 'Booked', text: 'Booked', name: 'Manish Goyal' },
-            66: { status: 'Blank', text: 'Book Now', name: '' },
-            67: { status: 'Blank', text: 'Book Now', name: '' },
-            68: { status: 'Blank', text: 'Book Now', name: '' },
-            69: { status: 'Blank', text: 'Book Now', name: '' },
-            70: { status: 'Blank', text: 'Book Now', name: '' },
-            71: { status: 'Blank', text: 'Book Now', name: '' },
-            72: { status: 'Blank', text: 'Book Now', name: '' },
-            73: { status: 'Blank', text: 'Book Now', name: '' },
-            74: { status: 'Blank', text: 'Book Now', name: '' },
-            75: { status: 'Booked', text: 'Booked', name: 'Pooja Kumari' },
-            76: { status: 'Blank', text: 'Book Now', name: '' },
-            77: { status: 'Blank', text: 'Book Now', name: '' },
-            78: { status: 'Blank', text: 'Book Now', name: '' },
-            79: { status: 'Blank', text: 'Book Now', name: '' },
-            80: { status: 'Blank', text: 'Book Now', name: '' },
-            81: { status: 'Blank', text: 'Book Now', name: '' },
-            82: { status: 'Blank', text: 'Book Now', name: '' },
-            83: { status: 'Blank', text: 'Book Now', name: '' },
-            84: { status: 'Blank', text: 'Book Now', name: '' },
-            85: { status: 'Booked', text: 'Booked', name: 'Sandeep Kumar' },
-            86: { status: 'Blank', text: 'Book Now', name: '' },
-            87: { status: 'Blank', text: 'Book Now', name: '' },
-            88: { status: 'Blank', text: 'Book Now', name: '' },
-            89: { status: 'Blank', text: 'Book Now', name: '' },
-            90: { status: 'Blank', text: 'Book Now', name: '' },
-            91: { status: 'Blank', text: 'Book Now', name: '' },
-            92: { status: 'Blank', text: 'Book Now', name: '' },
-            93: { status: 'Blank', text: 'Book Now', name: '' },
-            94: { status: 'Blank', text: 'Book Now', name: '' },
-            95: { status: 'Booked', text: 'Booked', name: 'Kajal Rathore' },
-            96: { status: 'Blank', text: 'Book Now', name: '' },
-            97: { status: 'Blank', text: 'Book Now', name: '' },
-            98: { status: 'Blank', text: 'Book Now', name: '' },
-            99: { status: 'Blank', text: 'Book Now', name: '' },
-            100: { status: 'Booked', text: 'Booked', name: 'Sunil Choudhary' }
-        };
+        // Google Sheet Apps Script Web App URL
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby11yv6uQW.../exec"; // Replace with your exact deployed Web App URL if needed
 
         let selectedSeat = null;
 
-        function loadSeats() {
+        async function fetchSeatData() {
+            try {
+                if(WEB_APP_URL.includes("YOUR_GOOGLE_APPS_SCRIPT")) {
+                    document.getElementById('seatsGrid').innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #f43f5e; padding: 20px;">⚠️ Please update the WEB_APP_URL in script with your Google Apps Script Web App URL!</div>`;
+                    return;
+                }
+
+                const response = await fetch(WEB_APP_URL);
+                const data = await response.json();
+                generateSeats(data);
+            } catch (error) {
+                console.error("Error fetching seat data:", error);
+                document.getElementById('seatsGrid').innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #f43f5e; padding: 20px;">❌ Failed to load live data from Google Sheet. Please check the URL.</div>`;
+            }
+        }
+
+        function generateSeats(seatMap) {
             const grid = document.getElementById('seatsGrid');
             grid.innerHTML = '';
             
@@ -587,7 +503,7 @@
             let bookedCount = 0;
 
             for (let i = 1; i <= 100; i++) {
-                const seatInfo = seatMapData[i] || { status: "Blank", text: "Book Now", name: "" };
+                const seatInfo = seatMap[i] || { status: "Blank", text: "Book Now", name: "" };
                 const seatDiv = document.createElement('div');
                 
                 let nameHtml = seatInfo.name ? `<div class="seat-name">${seatInfo.name}</div>` : '';
@@ -622,20 +538,11 @@
                 title = `🔄 Seat Number #${seatNo} Renewal Form ⏳`;
             }
             document.getElementById('modalTitle').innerText = title;
-            
-            const upiId = "9413618248-2@ybl";
-            const name = "Hi-Tech Library Nohar";
-            const amount = "800.00";
-            const note = `Library Seat No ${seatNo} Booking`;
-            
-            const phonepeUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
-            
-            document.getElementById('phonepeLink').href = phonepeUrl;
             document.getElementById('whatsappBtn').style.display = 'none';
             document.getElementById('bookingModal').style.display = 'flex';
         }
 
-        function enableWhatsAppBtn() {
+        async function handleBookingPayment() {
             const name = document.getElementById('studentName').value.trim();
             const phone = document.getElementById('studentPhone').value.trim();
             const address = document.getElementById('studentAddress').value.trim();
@@ -646,6 +553,30 @@
                 return;
             }
 
+            // 1. Send data to Google Sheet automatically
+            if (!WEB_APP_URL.includes("YOUR_GOOGLE_APPS_SCRIPT")) {
+                try {
+                    fetch(WEB_APP_URL, {
+                        method: "POST",
+                        mode: "no-cors",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ seatNo: selectedSeat, name, phone, address, exam })
+                    });
+                } catch(e) {
+                    console.log("Sheet update trigger error:", e);
+                }
+            }
+
+            // 2. Open PhonePe Payment Intent
+            const upiId = "9413618248-2@ybl";
+            const payeeName = "Hi-Tech Library Nohar";
+            const amount = "800.00";
+            const note = `Library Seat No ${selectedSeat} Booking`;
+            const phonepeUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+            
+            window.open(phonepeUrl, '_blank');
+
+            // 3. Show WhatsApp Confirmation Button
             const message = `✨ *Hello Sir/Madam!* 🙏\n\nI have paid the fee of *₹800* via PhonePe for Seat Number *#${selectedSeat}* at Hi-Tech Library Nohar. 💳✅\n\n📋 *My Details:*\n👤 Name: ${name}\n📱 Mobile: ${phone}\n📍 Address: ${address}\n🎯 Exam: ${exam}\n\n🚀 I will be coming to the library starting tomorrow. Please confirm my seat. Thank you! 😊📚`;
             
             const whatsappUrl = `https://wa.me/919413618248?text=${encodeURIComponent(message)}`;
@@ -657,9 +588,10 @@
 
         function closeModal() {
             document.getElementById('bookingModal').style.display = 'none';
+            fetchSeatData(); // Refresh sheet data on modal close
         }
 
-        window.onload = loadSeats;
+        window.onload = fetchSeatData;
     </script>
 </body>
 </html>
