@@ -473,24 +473,19 @@
     </footer>
 
     <script>
-        // Google Sheet Apps Script Web App URL
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby11yv6uQW.../exec"; // Replace with your exact deployed Web App URL if needed
+        // Integrated Google Apps Script Web App URL
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzktQjJI8cw22sd-Mnvh6YP18ZwosXlycB5cZV2qJyVxxsTocRexNtWw7ftKBEolRGt4w/exec";
 
         let selectedSeat = null;
 
         async function fetchSeatData() {
             try {
-                if(WEB_APP_URL.includes("YOUR_GOOGLE_APPS_SCRIPT")) {
-                    document.getElementById('seatsGrid').innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #f43f5e; padding: 20px;">⚠️ Please update the WEB_APP_URL in script with your Google Apps Script Web App URL!</div>`;
-                    return;
-                }
-
                 const response = await fetch(WEB_APP_URL);
                 const data = await response.json();
                 generateSeats(data);
             } catch (error) {
                 console.error("Error fetching seat data:", error);
-                document.getElementById('seatsGrid').innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #f43f5e; padding: 20px;">❌ Failed to load live data from Google Sheet. Please check the URL.</div>`;
+                document.getElementById('seatsGrid').innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #f43f5e; padding: 20px;">❌ Failed to load live data from Google Sheet. Please check connection.</div>`;
             }
         }
 
@@ -554,17 +549,15 @@
             }
 
             // 1. Send data to Google Sheet automatically
-            if (!WEB_APP_URL.includes("YOUR_GOOGLE_APPS_SCRIPT")) {
-                try {
-                    fetch(WEB_APP_URL, {
-                        method: "POST",
-                        mode: "no-cors",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ seatNo: selectedSeat, name, phone, address, exam })
-                    });
-                } catch(e) {
-                    console.log("Sheet update trigger error:", e);
-                }
+            try {
+                fetch(WEB_APP_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ seatNo: selectedSeat, name, phone, address, exam })
+                });
+            } catch(e) {
+                console.log("Sheet update trigger error:", e);
             }
 
             // 2. Open PhonePe Payment Intent
@@ -588,7 +581,7 @@
 
         function closeModal() {
             document.getElementById('bookingModal').style.display = 'none';
-            fetchSeatData(); // Refresh sheet data on modal close
+            fetchSeatData(); // Refresh seat data on modal close
         }
 
         window.onload = fetchSeatData;
