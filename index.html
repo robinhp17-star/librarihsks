@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>हाईटेक लाइब्रेरी - सीट बुकिंग और प्रबंधन</title>
+    <title>📚 हाईटेक लाइब्रेरी - सीट बुकिंग और प्रबंधन</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-main: #0f172a;
-            --bg-card: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --primary: #38bdf8;
-            --free: #22c55e;
-            --warning: #eab308;
-            --booked: #ef4444;
-            --whatsapp: #25d366;
+            --bg-main: #18181b;
+            --bg-card: #27272a;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --primary: #f59e0b;
+            --free: #10b981;
+            --warning: #facc15;
+            --booked: #f43f5e;
+            --whatsapp: #22c55e;
         }
         * {
             margin: 0;
@@ -44,6 +44,38 @@
             color: var(--text-muted);
         }
 
+        /* Library Photo Gallery Banner */
+        .gallery-container {
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        .gallery-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            border: 1px solid #3f3f46;
+        }
+        .gallery-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .gallery-card img:hover {
+            transform: scale(1.05);
+        }
+        .gallery-card p {
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
         /* Floating WhatsApp Help Button */
         .float-whatsapp {
             position: fixed;
@@ -51,14 +83,14 @@
             right: 20px;
             background-color: var(--whatsapp);
             color: white;
-            padding: 12px 20px;
+            padding: 12px 22px;
             border-radius: 50px;
             display: flex;
             align-items: center;
             gap: 10px;
             text-decoration: none;
             font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             z-index: 99;
             transition: transform 0.2s;
         }
@@ -66,7 +98,7 @@
             transform: scale(1.05);
         }
         .float-whatsapp i {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
         }
 
         /* Features Section */
@@ -159,6 +191,7 @@
             background: var(--bg-card);
             border-radius: 15px;
             box-shadow: 0 10px 15px rgba(0,0,0,0.4);
+            border: 1px solid #3f3f46;
         }
         .seat {
             padding: 12px 8px;
@@ -174,15 +207,15 @@
         }
         .seat.blank:hover {
             transform: scale(1.05);
-            background-color: #16a34a;
+            background-color: #059669;
         }
         .seat.expiring {
             background-color: var(--warning);
-            color: #1e293b;
+            color: #18181b;
         }
         .seat.expiring:hover {
             transform: scale(1.05);
-            background-color: #ca8a04;
+            background-color: #eab308;
         }
         .seat.booked {
             background-color: var(--booked);
@@ -205,7 +238,7 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -218,8 +251,8 @@
             border-radius: 12px;
             width: 100%;
             max-width: 450px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            border: 1px solid #334155;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            border: 1px solid #3f3f46;
             text-align: left;
         }
         .modal-content h2 {
@@ -247,19 +280,19 @@
             width: 100%;
             padding: 10px;
             border-radius: 6px;
-            border: 1px solid #475569;
-            background: #0f172a;
+            border: 1px solid #52525b;
+            background: #18181b;
             color: white;
             font-size: 0.95rem;
         }
         .pay-btn {
             display: block;
-            background: #6366f1;
-            color: white;
+            background: var(--primary);
+            color: #18181b;
             padding: 12px;
             border-radius: 8px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.95rem;
             text-align: center;
             margin-top: 15px;
@@ -267,7 +300,7 @@
             transition: background 0.2s;
         }
         .pay-btn:hover {
-            background: #4f46e5;
+            background: #d97706;
         }
         .whatsapp-confirm-btn {
             display: none;
@@ -310,36 +343,48 @@
 <body>
 
     <header>
-        <h1>हाईटेक लाइब्रेरी</h1>
-        <p>पढ़ाई के लिए शांत और आधुनिक वातावरण - मात्र ₹800 प्रति माह</p>
+        <h1>🏛️ हाईटेक लाइब्रेरी</h1>
+        <p>📖 पढ़ाई के लिए शांत और आधुनिक वातावरण - मात्र ₹800 प्रति माह 🌟</p>
     </header>
 
+    <!-- Library Photos Gallery -->
+    <div class="gallery-container">
+        <div class="gallery-card">
+            <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=600&q=80" alt="Library Study Area">
+            <p>📚 शांत और आरामदायक स्टडी हॉल</p>
+        </div>
+        <div class="gallery-card">
+            <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=600&q=80" alt="Library Bookshelf">
+            <p>💻 हाई-स्पीड इंटरनेट और वाई-फाई</p>
+        </div>
+    </div>
+
     <!-- Floating WhatsApp Help Button -->
-    <a href="https://wa.me/919413618248?text=नमस्ते,%20मुझे%20हाईटेक%20लाइब्रेरी%20के%20बारे%20में%20कुछ%20जानकारी%20चाहिए।" class="float-whatsapp" target="_blank">
-        <i class="fa-brands fa-whatsapp"></i> सहायता के लिए चैट करें
+    <a href="https://wa.me/919413618248?text=नमस्ते%20🙏,%20मुझे%20हाईटेक%20लाइब्रेरी%20के%20बारे%20में%20कुछ%20जानकारी%20चाहिए%20❓" class="float-whatsapp" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i> सहायता के लिए चैट करें 💬
     </a>
 
     <!-- लाइब्रेरी के फीचर्स -->
     <div class="features-container">
         <div class="feature-card">
             <i class="fa-solid fa-wifi"></i>
-            <h4>1 Gbps हाई-स्पीड वाई-फाई</h4>
-            <p>बिना रुकावट ऑनलाइन स्टडी</p>
+            <h4>⚡ 1 Gbps वाई-फाई</h4>
+            <p>बिना रुकावट ऑनलाइन स्टडी 🚀</p>
         </div>
         <div class="feature-card">
             <i class="fa-solid fa-droplet"></i>
-            <h4>शुद्ध आरओ वाटर</h4>
-            <p>ठंडा और स्वच्छ पेयजल</p>
+            <h4>💧 शुद्ध आरओ वाटर</h4>
+            <p>ठंडा और स्वच्छ पेयजल 🚰</p>
         </div>
         <div class="feature-card">
             <i class="fa-solid fa-snowflake"></i>
-            <h4>फुल्ली एयर कंडीशन (AC)</h4>
-            <p>आरामदायक वातावरण</p>
+            <h4>❄️ फुल्ली एयर कंडीशन (AC)</h4>
+            <p>आरामदायक वातावरण 🌬️</p>
         </div>
         <div class="feature-card">
             <i class="fa-solid fa-charging-station"></i>
-            <h4>चार्जिंग सॉकेट</h4>
-            <p>हर सीट पर लैपटॉप/मोबाइल चार्जिंग</p>
+            <h4>🔌 चार्जिंग सॉकेट</h4>
+            <p>हर सीट पर पावर प्वाइंट 🔋</p>
         </div>
     </div>
 
@@ -347,27 +392,27 @@
     <div class="stats-container">
         <div class="stat-box total">
             <h3 id="total-seats">100</h3>
-            <p>कुल सीट्स</p>
+            <p>🏢 कुल सीट्स</p>
         </div>
         <div class="stat-box available">
             <h3 id="free-seats">--</h3>
-            <p>खाली (Blank)</p>
+            <p>✅ खाली (Blank)</p>
         </div>
         <div class="stat-box expiring">
             <h3 id="expiring-seats">--</h3>
-            <p>रिन्यूअल बाकी</p>
+            <p>⚠️ रिन्यूअल बाकी</p>
         </div>
         <div class="stat-box booked">
             <h3 id="booked-seats">--</h3>
-            <p>बुकड</p>
+            <p>❌ बुकड</p>
         </div>
     </div>
 
     <!-- लीजेंड -->
     <div class="legend">
-        <div class="legend-item"><div class="color-box free"></div> Blank (Book Now)</div>
-        <div class="legend-item"><div class="color-box warning"></div> Renewal Due (Yellow)</div>
-        <div class="legend-item"><div class="color-box reserved"></div> Booked (Red)</div>
+        <div class="legend-item"><div class="color-box free"></div> 🟩 Blank (Book Now)</div>
+        <div class="legend-item"><div class="color-box warning"></div> 🟨 Renewal Due (Yellow)</div>
+        <div class="legend-item"><div class="color-box reserved"></div> 🟥 Booked (Red)</div>
     </div>
 
     <!-- सीट्स ग्रिड -->
@@ -378,38 +423,38 @@
     <!-- बुकिंग और एडमिशन मॉडल -->
     <div class="modal" id="bookingModal">
         <div class="modal-content">
-            <h2 id="modalTitle">सीट बुकिंग और एडमिशन</h2>
-            <p id="modalText">अपनी डिटेल्स भरें और PhonePe से ₹800 भुगतान करें।</p>
+            <h2 id="modalTitle">✨ सीट बुकिंग और एडमिशन 📝</h2>
+            <p id="modalText">अपनी डिटेल्स भरें और PhonePe से ₹800 भुगतान करें। 👇</p>
             
             <div class="form-group">
-                <label>पूरा नाम (Full Name)</label>
+                <label>👤 पूरा नाम (Full Name)</label>
                 <input type="text" id="studentName" placeholder="अपना नाम लिखें">
             </div>
             <div class="form-group">
-                <label>मोबाइल नंबर (Mobile Number)</label>
+                <label>📱 मोबाइल नंबर (Mobile Number)</label>
                 <input type="tel" id="studentPhone" placeholder="10 अंकों का मोबाइल नंबर">
             </div>
             <div class="form-group">
-                <label>पता (Address / City)</label>
-                <input type="text" id="studentAddress" placeholder="गाड़ी या शहर का नाम">
+                <label>📍 पता (Address / City)</label>
+                <input type="text" id="studentAddress" placeholder="गाँव या शहर का नाम">
             </div>
             <div class="form-group">
-                <label>किस एग्जाम की तैयारी कर रहे हैं?</label>
+                <label>🎯 किस एग्जाम की तैयारी कर रहे हैं?</label>
                 <input type="text" id="studentExam" placeholder="जैसे: RPSC, RAS, NEET, SSC">
             </div>
 
-            <a href="#" id="phonepeLink" class="pay-btn" onclick="enableWhatsAppBtn()">1. PhonePe से ₹800 भुगतान करें</a>
+            <a href="#" id="phonepeLink" class="pay-btn" onclick="enableWhatsAppBtn()">1. 💳 PhonePe से ₹800 भुगतान करें</a>
             
             <a href="#" id="whatsappBtn" class="whatsapp-confirm-btn" target="_blank">
-                <i class="fa-brands fa-whatsapp"></i> 2. WhatsApp पर कन्फर्मेशन भेजें
+                <i class="fa-brands fa-whatsapp"></i> 2. 🚀 WhatsApp पर कन्फर्मेशन भेजें
             </a>
 
-            <button class="close-btn" onclick="closeModal()">रद्द करें</button>
+            <button class="close-btn" onclick="closeModal()">❌ रद्द करें</button>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 हाईटेक लाइब्रेरी | सभी अधिकार सुरक्षित</p>
+        <p>&copy; 2026 हाईटेक लाइब्रेरी | सभी अधिकार सुरक्षित 🌟</p>
     </footer>
 
     <script>
@@ -555,14 +600,14 @@
 
         function openModal(seatNo, status) {
             selectedSeat = seatNo;
-            let title = `सीट नंबर #${seatNo} बुकिंग फॉर्म`;
+            let title = `🪑 सीट नंबर #${seatNo} बुकिंग फॉर्म 📝`;
             if (status === "Expiring") {
-                title = `सीट नंबर #${seatNo} रिन्यूअल फॉर्म`;
+                title = `🔄 सीट नंबर #${seatNo} रिन्यूअल फॉर्म ⏳`;
             }
             document.getElementById('modalTitle').innerText = title;
             
-            // PhonePe UPI Intent URL
-            const upiId = "941361824838@ybl";
+            // Updated PhonePe UPI Intent URL with 9413618248-2@ybl
+            const upiId = "9413618248-2@ybl";
             const name = "Hitech Library";
             const amount = "800.00";
             const note = `Library Seat No ${seatNo} Booking`;
@@ -570,7 +615,7 @@
             const phonepeUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
             
             document.getElementById('phonepeLink').href = phonepeUrl;
-            document.getElementById('whatsappBtn').style.display = 'none'; // शुरू में छिपा रखें जब तक पेमेंट बटन पर क्लिक न हो
+            document.getElementById('whatsappBtn').style.display = 'none';
             document.getElementById('bookingModal').style.display = 'flex';
         }
 
@@ -581,12 +626,11 @@
             const exam = document.getElementById('studentExam').value.trim();
 
             if (!name || !phone || !address || !exam) {
-                alert("कृपया पहले अपनी सभी डिटेल्स (नाम, मोबाइल, पता, एग्जाम) भरें!");
+                alert("⚠️ कृपया पहले अपनी सभी डिटेल्स (नाम, मोबाइल, पता, एग्जाम) भरें!");
                 return;
             }
 
-            // WhatsApp Message Text
-            const message = `नमस्ते, मैंने हाईटेक लाइब्रेरी के लिए सीट नंबर #${selectedSeat} की फीस ₹800 पे कर दी है।\n\nमेरी डिटेल्स:\n• नाम: ${name}\n• मोबाइल: ${phone}\n• पता: ${address}\n• एग्जाम: ${exam}\n\nमैं कल से लाइब्रेरी आ जाऊंगा। कृपया मेरी सीट कन्फर्म करें।`;
+            const message = `✨ *नमस्ते सर/मैडम!* 🙏\n\nमैंने हाईटेक लाइब्रेरी के लिए सीट नंबर *#${selectedSeat}* की फीस *₹800* PhonePe से पे कर दी है। 💳✅\n\n📋 *मेरी डिटेल्स:*\n👤 नाम: ${name}\n📱 मोबाइल: ${phone}\n📍 पता: ${address}\n🎯 एग्जाम: ${exam}\n\n🚀 मैं कल से लाइब्रेरी आ जाऊंगा। कृपया मेरी सीट कन्फर्म करें। धन्यवाद! 😊📚`;
             
             const whatsappUrl = `https://wa.me/919413618248?text=${encodeURIComponent(message)}`;
             
