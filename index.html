@@ -107,6 +107,29 @@
             font-size: 1.6rem;
         }
 
+        /* WiFi Password Banner */
+        .wifi-banner {
+            max-width: 1000px;
+            margin: 0 auto 25px auto;
+            background: linear-gradient(135deg, #27272a, #3f3f46);
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+        .wifi-banner h3 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        .wifi-banner p {
+            font-size: 1.1rem;
+            color: #f4f4f5;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
         /* Features Section */
         .features-container {
             display: grid;
@@ -374,6 +397,12 @@
         </div>
     </div>
 
+    <!-- WiFi Password Block -->
+    <div class="wifi-banner" id="wifiBannerContainer" style="display: none;">
+        <h3>📶 High-Speed Wi-Fi Password</h3>
+        <p id="wifiPasswordText">Loading WiFi Password...</p>
+    </div>
+
     <!-- Floating WhatsApp Help Button -->
     <a href="https://wa.me/919413618248?text=Hello%20🙏,%20I%20need%20some%20information%20about%20Hi-Tech%20Library%20Nohar%20❓" class="float-whatsapp" target="_blank">
         <i class="fa-brands fa-whatsapp"></i> help247 💬
@@ -493,6 +522,7 @@
         function parseCSV(text) {
             const lines = text.split("\n");
             seatMapData = {};
+            let wifiPassword = "";
             
             for (let i = 1; i < lines.length; i++) {
                 const line = lines[i].trim();
@@ -517,6 +547,12 @@
                 const status = row[1] || "Blank";
                 const name = row[2] || "";
 
+                // Check for Row 101 (WiFi Password)
+                if (seatNo === 101) {
+                    wifiPassword = name || status;
+                    continue;
+                }
+
                 if (seatNo >= 1 && seatNo <= 100) {
                     let type = "Blank";
                     let textVal = "Book Now";
@@ -540,6 +576,15 @@
                     };
                 }
             }
+
+            // Display WiFi Password if available in Row 101
+            if (wifiPassword && wifiPassword !== "Blank" && wifiPassword !== "Status" && wifiPassword !== "Wi-Fi Password") {
+                document.getElementById('wifiPasswordText').innerText = `🔑 Password is: ${wifiPassword}`;
+                document.getElementById('wifiBannerContainer').style.display = 'block';
+            } else {
+                document.getElementById('wifiBannerContainer').style.display = 'none';
+            }
+
             generateSeats();
         }
 
@@ -611,7 +656,7 @@
             
             window.open(phonepeUrl, '_blank');
 
-            // Show WhatsApp Confirmation Button so owner gets student info directly
+            // Show WhatsApp Confirmation Button
             const message = `✨ *Hello Sir/Madam!* 🙏\n\nI have paid the fee of *₹800* via PhonePe for Seat Number *#${selectedSeat}* at Hi-Tech Library Nohar. 💳✅\n\n📋 *My Details:*\n👤 Name: ${name}\n📱 Mobile: ${phone}\n📍 Address: ${address}\n🎯 Exam: ${exam}\n\n🚀 I will be coming to the library starting tomorrow. Please confirm my seat. Thank you! 😊📚`;
             
             const whatsappUrl = `https://wa.me/919413618248?text=${encodeURIComponent(message)}`;
