@@ -381,7 +381,7 @@
 
     <header>
         <h1>🏛️ Hi-Tech Library Nohar</h1>
-        <p>📖 Peaceful & Modern Study Environment - Only ₹800 Per Month 🌟</p>
+        <p>📖 Peaceful & Modern Study Environment - Only ₹1 Per Month 🌟</p>
         <div class="owner-tag">👑 Owner: Robin Singh</div>
     </header>
 
@@ -468,7 +468,7 @@
     <div class="modal" id="bookingModal">
         <div class="modal-content">
             <h2 id="modalTitle">✨ Seat Booking & Admission 📝</h2>
-            <p id="modalText">Fill in your details and pay ₹800 via PhonePe. 👇</p>
+            <p id="modalText">Fill in your details and pay ₹1 via PhonePe. 👇</p>
             
             <div class="form-group">
                 <label>👤 Full Name</label>
@@ -487,7 +487,7 @@
                 <input type="text" id="studentExam" placeholder="e.g., RPSC, RAS, NEET, SSC">
             </div>
 
-            <a href="#" id="phonepeLink" class="pay-btn" onclick="handleBookingPayment()">1. 💳 Pay ₹800 via PhonePe</a>
+            <a href="#" id="phonepeLink" class="pay-btn" onclick="handleBookingPayment()">1. 💳 Pay ₹1 via PhonePe</a>
             
             <a href="#" id="whatsappBtn" class="whatsapp-confirm-btn" target="_blank">
                 <i class="fa-brands fa-whatsapp"></i> 2. 🚀 Send Confirmation on WhatsApp
@@ -577,7 +577,7 @@
                 }
             }
 
-            // Display WiFi Password if available in Row 101
+            // Display WiFi Password if available
             if (wifiPassword && wifiPassword !== "Blank" && wifiPassword !== "Status" && wifiPassword !== "Wi-Fi Password") {
                 document.getElementById('wifiPasswordText').innerText = `🔑 Password is: ${wifiPassword}`;
                 document.getElementById('wifiBannerContainer').style.display = 'block';
@@ -650,14 +650,14 @@
             // Open PhonePe Payment Intent
             const upiId = "9413618248-2@ybl";
             const payeeName = "Hi-Tech Library Nohar";
-            const amount = "800.00";
+            const amount = "1.00";
             const note = `Library Seat No ${selectedSeat} Booking`;
             const phonepeUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
             
             window.open(phonepeUrl, '_blank');
 
             // Show WhatsApp Confirmation Button
-            const message = `✨ *Hello Sir/Madam!* 🙏\n\nI have paid the fee of *₹800* via PhonePe for Seat Number *#${selectedSeat}* at Hi-Tech Library Nohar. 💳✅\n\n📋 *My Details:*\n👤 Name: ${name}\n📱 Mobile: ${phone}\n📍 Address: ${address}\n🎯 Exam: ${exam}\n\n🚀 I will be coming to the library starting tomorrow. Please confirm my seat. Thank you! 😊📚`;
+            const message = `✨ *Hello Sir/Madam!* 🙏\n\nI have paid the fee of *₹1* via PhonePe for Seat Number *#${selectedSeat}* at Hi-Tech Library Nohar. 💳✅\n\n📋 *My Details:*\n👤 Name: ${name}\n📱 Mobile: ${phone}\n📍 Address: ${address}\n🎯 Exam: ${exam}\n\n🚀 I will be coming to the library starting tomorrow. Please confirm my seat. Thank you! 😊📚`;
             
             const whatsappUrl = `https://wa.me/919413618248?text=${encodeURIComponent(message)}`;
             
